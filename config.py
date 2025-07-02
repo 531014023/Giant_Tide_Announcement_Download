@@ -46,4 +46,17 @@ class Config:
         """获取分类列表"""
         if self.plate and self.list_search and self.plate in self.list_search:
             return self.list_search[self.plate].get('category', [])
-        return [] 
+        return []
+
+    def get_exclude_keywords(self):
+        """
+        从.env读取排除关键字，返回列表
+        """
+        keywords = os.getenv("EXCLUDE_KEYWORDS", "")
+        # 支持逗号、分号分隔
+        if not keywords.strip():
+            return []
+        # 允许中英文逗号和分号
+        for sep in [',', '，', ';', '；']:
+            keywords = keywords.replace(sep, ',')
+        return [k.strip() for k in keywords.split(',') if k.strip()] 

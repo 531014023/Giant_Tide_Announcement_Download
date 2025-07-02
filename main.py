@@ -76,6 +76,11 @@ class AnnouncementDownloader:
         
         print(f"找到 {len(category_list)} 个分类")
         
+        # 获取排除关键字
+        exclude_keywords = self.config.get_exclude_keywords()
+        if exclude_keywords:
+            print(f"排除关键字: {exclude_keywords}")
+        
         # 如果指定了分类过滤，只保留匹配的分类
         if category_filter:
             filtered = []
@@ -127,7 +132,11 @@ class AnnouncementDownloader:
                 category_value=category_name
             ):
                 announcement_count += 1
-                
+                # 新增：排除关键字判断
+                title = announcement.get('announcementTitle', '')
+                if exclude_keywords and any(kw in title for kw in exclude_keywords):
+                    print(f"跳过公告: {title} (命中排除关键字)")
+                    continue
                 # 立即下载当前公告
                 result = self.file_downloader.download_announcement(
                     announcement,
@@ -138,7 +147,7 @@ class AnnouncementDownloader:
                     print(f"增量更新：遇到已存在文件，跳过当前分类 {category_name}")
                     skip_this_category = True
                     break
-                if result is True or (result == 'skip_category' and incremental_update):
+                if result is True:
                     category_downloaded += 1
                 
                 # 每下载10个文件显示一次进度
