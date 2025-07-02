@@ -80,8 +80,8 @@ class AnnouncementDownloader:
         if category_filter:
             filtered = []
             for item in category_list:
-                # key精确匹配，value支持模糊匹配
-                if category_filter == item.get('key') or (item.get('value') and category_filter in item.get('value')):
+                # key，value精确匹配，
+                if category_filter == item.get('key') or item.get('value') == category_filter:
                     filtered.append(item)
             if not filtered:
                 print(f"未找到指定分类: {category_filter}")
