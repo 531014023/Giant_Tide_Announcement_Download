@@ -59,12 +59,13 @@ pip install -r requirements.txt
 2. 运行程序：
 
 ```bash
-python main.py <股票代码>
+python main.py <股票代码>/<股票名称>
 ```
 
 示例：
 ```bash
 python main.py 601225
+python main.py 陕西煤业
 ```
 
 ### 启动时指定分类下载
