@@ -1,6 +1,6 @@
 # 巨潮资讯网公告下载器
 
-这是一个用于从巨潮资讯网下载指定公司公告的Python工具，使用模块化设计，支持批量下载PDF格式的公告文件。
+这是一个用于从巨潮资讯网下载指定公司公告的Python工具，使用模块化设计，支持批量下载PDF格式的公告文件。默认下载全部公告。
 
 ## 功能特点
 
@@ -30,17 +30,21 @@ Giant_Tide_Announcement_Download/
 ├── README.md            # 项目说明
 ├── list-search.json     # 配置文件（需要用户提供）
 └── cache/               # 缓存目录
-    ├── topSearchquery/  # 股票搜索缓存
-    │   ├── 601225_10_topSearchquery.json
-    │   └── ...
-    ├── stock/           # 股票页面缓存
-    │   ├── 601225_9900023204_false_disclosurestock.html
-    │   └── ...
-    └── hisAnnouncementquery/ # 公告查询缓存
-        ├── 年度报告/            # 分类中文名目录
-        │   ├── 601225_category_ndbg_szsh_1_sse_sse_empty_empty_hisAnnouncementquery.json
-        │   └── ...
-        └── ...
+    ├── 601225_陕西煤业/                # 每只股票独立缓存目录
+    │   ├── topSearchquery/             # 股票搜索缓存
+    │   │   ├── 601225_10_topSearchquery.json
+    │   │   └── ...
+    │   │
+    │   ├── stock/                      # 股票页面缓存
+    │   │   ├── 601225_9900023204_false_disclosurestock.html
+    │   │   └── ...
+    │   │
+    │   └── hisAnnouncementquery/       # 公告查询缓存
+    │       ├── 年度报告/                # 分类中文名目录
+    │       │   ├── 601225_category_ndbg_szsh_1_sse_sse_empty_empty_hisAnnouncementquery.json
+    │       │   └── ...
+    │       └── ...
+    └── ...
 ```
 
 ## 安装依赖
@@ -62,6 +66,24 @@ python main.py <股票代码>
 ```bash
 python main.py 601225
 ```
+
+### 启动时指定分类下载
+
+你可以通过命令行参数指定只下载某个分类的公告，支持分类中文名（模糊匹配）或分类key（精确匹配）。
+
+示例：
+
+只下载"年度报告"分类（支持模糊）：
+```bash
+python main.py 601225 年度报告
+```
+
+只下载key为"category_ndbg_szsh"的分类：
+```bash
+python main.py 601225 category_ndbg_szsh
+```
+
+如果不指定分类参数，则默认下载全部分类。 
 
 ### 缓存管理
 
@@ -170,20 +192,22 @@ downloads/
 
 ```
 cache/
-├── topSearchquery/          # 股票搜索缓存
-│   ├── 601225_10_topSearchquery.json
-│   └── ...
-├── stock/                   # 股票页面缓存
-│   ├── 601225_9900023204_false_disclosurestock.html
-│   └── ...
-└── hisAnnouncementquery/    # 公告查询缓存
-    ├── 年度报告/            # 分类中文名目录
-    │   ├── 601225_category_ndbg_szsh_1_sse_sse_empty_empty_hisAnnouncementquery.json
+└── 601225_陕西煤业/                # 每只股票独立缓存目录
+    ├── topSearchquery/             # 股票搜索缓存
+    │   ├── 601225_10_topSearchquery.json
     │   └── ...
-    └── ...
+    ├── stock/                      # 股票页面缓存
+    │   ├── 601225_9900023204_false_disclosurestock.html
+    │   └── ...
+    └── hisAnnouncementquery/       # 公告查询缓存
+        ├── 年度报告/                # 分类中文名目录
+        │   ├── 601225_category_ndbg_szsh_1_sse_sse_empty_empty_hisAnnouncementquery.json
+        │   └── ...
+        └── ...
 ```
 
-- 公告缓存路径为：`cache/hisAnnouncementquery/{分类中文名}/{股票信息}_{分类key}_{页码}_{column}_{plate}_{searchkey}_{seDate}_hisAnnouncementquery.json`
+- 所有缓存（topSearchquery、stock、hisAnnouncementquery）都自动存储在 `cache/{股票代码}_{股票名称}/` 目录下，互不干扰，便于管理和分析。
+- 公告缓存路径为：`cache/{股票代码}_{股票名称}/hisAnnouncementquery/{分类中文名}/{股票信息}_{分类key}_{页码}_{column}_{plate}_{searchkey}_{seDate}_hisAnnouncementquery.json`
 - 其中`分类中文名`为category.value（如"年度报告"），文件名顺序与代码一致。 
 
 ## 缓存目录和下载目录配置

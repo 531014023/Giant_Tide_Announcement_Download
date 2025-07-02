@@ -21,12 +21,13 @@ class AnnouncementDownloader:
         self.announcement_fetcher = AnnouncementFetcher(self.cache_manager)
         self.file_downloader = FileDownloader()
     
-    def run(self, stock_code):
+    def run(self, stock_code, category_filter=None):
         """
         运行下载流程
         
         Args:
             stock_code (str): 股票代码
+            category_filter (str|None): 分类过滤（中文名或key）
         """
         print(f"开始处理股票: {stock_code}")
         print("=" * 50)
@@ -47,6 +48,8 @@ class AnnouncementDownloader:
         
         # 设置股票信息到配置
         self.config.set_stock_info(stock_info)
+        # 设置缓存目录到股票专属目录
+        self.cache_manager.set_stock(stock_info['code'], stock_info['zwjc'])
         
         # 3. 获取板块信息
         print("\n步骤3: 获取板块信息")
@@ -70,6 +73,19 @@ class AnnouncementDownloader:
             return False
         
         print(f"找到 {len(category_list)} 个分类")
+        
+        # 如果指定了分类过滤，只保留匹配的分类
+        if category_filter:
+            filtered = []
+            for item in category_list:
+                # key精确匹配，value支持模糊匹配
+                if category_filter == item.get('key') or (item.get('value') and category_filter in item.get('value')):
+                    filtered.append(item)
+            if not filtered:
+                print(f"未找到指定分类: {category_filter}")
+                return False
+            category_list = filtered
+            print(f"仅下载指定分类(支持中文模糊): {category_filter}")
         
         # 5. 创建下载目录
         stock_name = stock_info['zwjc']
@@ -130,16 +146,17 @@ class AnnouncementDownloader:
 
 def main():
     """主函数"""
-    if len(sys.argv) != 2:
-        print("使用方法: python main.py <股票代码>")
-        print("示例: python main.py 601225")
+    if len(sys.argv) < 2:
+        print("使用方法: python main.py <股票代码> [分类名或key]")
+        print("示例: python main.py 601225 年度报告")
         return
     
     stock_code = sys.argv[1]
+    category_filter = sys.argv[2] if len(sys.argv) > 2 else None
     
     # 创建下载器实例并运行
     downloader = AnnouncementDownloader()
-    success = downloader.run(stock_code)
+    success = downloader.run(stock_code, category_filter)
     
     if success:
         print("\n程序执行成功!")

@@ -9,11 +9,16 @@ from pathlib import Path
 class CacheManager:
     """缓存管理类"""
     
-    def __init__(self, cache_dir="cache"):
-        self.cache_dir = cache_dir
-        self.top_search_dir = os.path.join(cache_dir, "topSearchquery")
-        self.stock_dir = os.path.join(cache_dir, "stock")
-        self.announcement_dir = os.path.join(cache_dir, "hisAnnouncementquery")
+    def __init__(self, cache_dir="cache", stock_code=None, stock_name=None):
+        self.base_dir = cache_dir
+        self.stock_code = stock_code
+        self.stock_name = stock_name
+        self.cache_dir = self.base_dir
+        if stock_code and stock_name:
+            self.cache_dir = os.path.join(self.base_dir, f"{stock_code}_{stock_name}")
+        self.top_search_dir = os.path.join(self.cache_dir, "topSearchquery")
+        self.stock_dir = os.path.join(self.cache_dir, "stock")
+        self.announcement_dir = os.path.join(self.cache_dir, "hisAnnouncementquery")
         
         # 创建缓存目录
         self._create_cache_dirs()
@@ -226,4 +231,14 @@ class CacheManager:
             'stock_count': len(os.listdir(self.stock_dir)) if os.path.exists(self.stock_dir) else 0,
             'announcement_count': len(os.listdir(self.announcement_dir)) if os.path.exists(self.announcement_dir) else 0
         }
-        return info 
+        return info
+
+    def set_stock(self, stock_code, stock_name):
+        """设置股票代码和名称，重置缓存目录"""
+        self.stock_code = stock_code
+        self.stock_name = stock_name
+        self.cache_dir = os.path.join(self.base_dir, f"{stock_code}_{stock_name}")
+        self.top_search_dir = os.path.join(self.cache_dir, "topSearchquery")
+        self.stock_dir = os.path.join(self.cache_dir, "stock")
+        self.announcement_dir = os.path.join(self.cache_dir, "hisAnnouncementquery")
+        self._create_cache_dirs() 
