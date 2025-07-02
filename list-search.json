@@ -1,0 +1,426 @@
+{
+    "szse": {
+      "plate": [
+        {"key": "sz", "value": "深市"},
+        {"key": "szmb", "value": "深主板"},
+        {"key": "szzx", "value": "中小板"},
+        {"key": "szcy", "value": "创业板"},
+        {"key": "sh", "value": "沪市"},
+        {"key": "shmb", "value": "沪主板"},
+        {"key": "shkcp", "value": "科创板"}
+      ],
+      "category": [
+        {"key": "category_ndbg_szsh", "value": "年报"},
+        {"key": "category_bndbg_szsh", "value": "半年报"},
+        {"key": "category_yjdbg_szsh", "value": "一季报"},
+        {"key": "category_sjdbg_szsh", "value": "三季报"},
+        {"key": "category_yjygjxz_szsh", "value": "业绩预告"},
+        {"key": "category_qyfpxzcs_szsh", "value": "权益分派"},
+        {"key": "category_dshgg_szsh", "value": "董事会"},
+        {"key": "category_jshgg_szsh", "value": "监事会"},
+        {"key": "category_gddh_szsh", "value": "股东会"},
+        {"key": "category_rcjy_szsh", "value": "日常经营"},
+        {"key": "category_gszl_szsh", "value": "公司治理"},
+        {"key": "category_zj_szsh", "value": "中介报告"},
+        {"key": "category_sf_szsh", "value": "首发"},
+        {"key": "category_zf_szsh", "value": "增发"},
+        {"key": "category_gqjl_szsh", "value": "股权激励"},
+        {"key": "category_pg_szsh", "value": "配股"},
+        {"key": "category_jj_szsh", "value": "解禁"},
+        {"key": "category_gszq_szsh", "value": "公司债"},
+        {"key": "category_kzzq_szsh", "value": "可转债"},
+        {"key": "category_qtrz_szsh", "value": "其他融资"},
+        {"key": "category_gqbd_szsh", "value": "股权变动"},
+        {"key": "category_bcgz_szsh", "value": "补充更正"},
+        {"key": "category_cqdq_szsh", "value": "澄清致歉"},
+        {"key": "category_fxts_szsh", "value": "风险提示"},
+        {"key": "category_tbclts_szsh", "value": "特别处理和退市"},
+        {"key": "category_tszlq_szsh", "value": "退市整理期"}
+      ],
+      "industry": [
+        {"key": "农、林、牧、渔业", "value": "农、林、牧、渔业"},
+        {"key": "采矿业", "value": "采矿业"},
+        {"key": "制造业", "value": "制造业"},
+        {"key": "电力、热力、燃气及水生产和供应业", "value": "电力、热力、燃气及水生产和供应业"},
+        {"key": "建筑业", "value": "建筑业"},
+        {"key": "批发和零售业", "value": "批发和零售业"},
+        {"key": "交通运输、仓储和邮政业", "value": "交通运输、仓储和邮政业"},
+        {"key": "住宿和餐饮业", "value": "住宿和餐饮业"},
+        {"key": "信息传输、软件和信息技术服务业", "value": "信息传输、软件和信息技术服务业"},
+        {"key": "金融业", "value": "金融业"},
+        {"key": "房地产业", "value": "房地产业"},
+        {"key": "租赁和商务服务业", "value": "租赁和商务服务业"},
+        {"key": "科学研究和技术服务业", "value": "科学研究和技术服务业"},
+        {"key": "水利、环境和公共设施管理业", "value": "水利、环境和公共设施管理业"},
+        {"key": "居民服务、修理和其他服务业", "value": "居民服务、修理和其他服务业"},
+        {"key": "教育", "value": "教育"},
+        {"key": "卫生和社会工作", "value": "卫生和社会工作"},
+        {"key": "文化、体育和娱乐业", "value": "文化、体育和娱乐业"},
+        {"key": "综合", "value": "综合"}
+      ],
+      "more":"行业",
+      "relation": [
+        {"key":"category_mdcf_szdy","value":"媒体采访"},
+        {"key":"category_lyhd_szdy","value":"路演活动"},
+        {"key":"category_dyhd_szdy","value":"调研活动"},
+        {"key":"category_glzd_szdy","value":"管理制度"}
+      ],
+      "regulator": [
+        {"key":"category_ggjgjg_tfp","value":"停复牌"},
+        {"key":"category_ggjgjg_ywtz","value":"业务通知"},
+        {"key":"category_ggjgjg_ppcfgkqz","value":"批评处罚及公开谴责"},
+        {"key":"category_ggjgjg_jyfxts","value":"交易风险提示"},
+        {"key":"category_ggjgjg_qt","value":"其他"}
+      ],
+        "period": [
+        {"key":"category_ndbg_szsh","value":"年报"},
+        {"key":"category_bndbg_szsh","value":"半年报"},
+        {"key":"category_yjdbg_szsh","value":"一季报"},
+        {"key":"category_sjdbg_szsh","value":"三季报"}
+      ],
+      "supervise": [
+        {"key":"category_bjjg","value":"保荐机构持续督导意见"},
+        {"key":"category_cwgw","value":"财务顾问持续督导意见"}
+      ],
+      "tabList": [
+        {"label": "公告", "name": "fulltext"},
+        {"label": "摘要", "name": "summary"},
+        {"label": "调研", "name": "relation"},
+        {"label": "停复牌及监管公告", "name": "regulator"},
+        {"label": "定期报告", "name": "5"},
+        {"label": "持续督导", "name": "supervise"}
+      ]
+    },
+    "sse": {
+      "plate": [
+        {"key": "sz", "value": "深市"},
+        {"key": "szmb", "value": "深主板"},
+        {"key": "szzx", "value": "中小板"},
+        {"key": "szcy", "value": "创业板"},
+        {"key": "sh", "value": "沪市"},
+        {"key": "shmb", "value": "沪主板"},
+        {"key": "shkcp", "value": "科创板"}
+      ],
+      "relation": [
+        {"key":"category_mdcf_szdy","value":"媒体采访"},
+        {"key":"category_lyhd_szdy","value":"路演活动"},
+        {"key":"category_dyhd_szdy","value":"调研活动"},
+        {"key":"category_glzd_szdy","value":"管理制度"}
+      ],
+      "category": [
+        {"key": "category_ndbg_szsh", "value": "年报"},
+        {"key": "category_bndbg_szsh", "value": "半年报"},
+        {"key": "category_yjdbg_szsh", "value": "一季报"},
+        {"key": "category_sjdbg_szsh", "value": "三季报"},
+        {"key": "category_yjygjxz_szsh", "value": "业绩预告"},
+        {"key": "category_qyfpxzcs_szsh", "value": "权益分派"},
+        {"key": "category_dshgg_szsh", "value": "董事会"},
+        {"key": "category_jshgg_szsh", "value": "监事会"},
+        {"key": "category_gddh_szsh", "value": "股东会"},
+        {"key": "category_rcjy_szsh", "value": "日常经营"},
+        {"key": "category_gszl_szsh", "value": "公司治理"},
+        {"key": "category_zj_szsh", "value": "中介报告"},
+        {"key": "category_sf_szsh", "value": "首发"},
+        {"key": "category_zf_szsh", "value": "增发"},
+        {"key": "category_gqjl_szsh", "value": "股权激励"},
+        {"key": "category_pg_szsh", "value": "配股"},
+        {"key": "category_jj_szsh", "value": "解禁"},
+        {"key": "category_gszq_szsh", "value": "公司债"},
+        {"key": "category_kzzq_szsh", "value": "可转债"},
+        {"key": "category_qtrz_szsh", "value": "其他融资"},
+        {"key": "category_gqbd_szsh", "value": "股权变动"},
+        {"key": "category_bcgz_szsh", "value": "补充更正"},
+        {"key": "category_cqdq_szsh", "value": "澄清致歉"},
+        {"key": "category_fxts_szsh", "value": "风险提示"},
+        {"key": "category_tbclts_szsh", "value": "特别处理和退市"},
+        {"key": "category_tszlq_szsh", "value": "退市整理期"}
+      ],
+      "industry": [
+        {"key": "农、林、牧、渔业", "value": "农、林、牧、渔业"},
+        {"key": "采矿业", "value": "采矿业"},
+        {"key": "制造业", "value": "制造业"},
+        {"key": "电力、热力、燃气及水生产和供应业", "value": "电力、热力、燃气及水生产和供应业"},
+        {"key": "建筑业", "value": "建筑业"},
+        {"key": "批发和零售业", "value": "批发和零售业"},
+        {"key": "交通运输、仓储和邮政业", "value": "交通运输、仓储和邮政业"},
+        {"key": "住宿和餐饮业", "value": "住宿和餐饮业"},
+        {"key": "信息传输、软件和信息技术服务业", "value": "信息传输、软件和信息技术服务业"},
+        {"key": "金融业", "value": "金融业"},
+        {"key": "房地产业", "value": "房地产业"},
+        {"key": "租赁和商务服务业", "value": "租赁和商务服务业"},
+        {"key": "科学研究和技术服务业", "value": "科学研究和技术服务业"},
+        {"key": "水利、环境和公共设施管理业", "value": "水利、环境和公共设施管理业"},
+        {"key": "居民服务、修理和其他服务业", "value": "居民服务、修理和其他服务业"},
+        {"key": "教育", "value": "教育"},
+        {"key": "卫生和社会工作", "value": "卫生和社会工作"},
+        {"key": "文化、体育和娱乐业", "value": "文化、体育和娱乐业"},
+        {"key": "综合", "value": "综合"}
+      ],
+      "more":"行业",
+      "regulator": [
+        {"key":"category_ggjgjg_tfp","value":"停复牌"},
+        {"key":"category_ggjgjg_ywtz","value":"业务通知"},
+        {"key":"category_ggjgjg_ppcfgkqz","value":"批评处罚及公开谴责"},
+        {"key":"category_ggjgjg_jyfxts","value":"交易风险提示"},
+        {"key":"category_ggjgjg_qt","value":"其他"}
+      ],
+      "period": [
+        {"key":"category_ndbg_szsh","value":"年报"},
+        {"key":"category_bndbg_szsh","value":"半年报"},
+        {"key":"category_yjdbg_szsh","value":"一季报"},
+        {"key":"category_sjdbg_szsh","value":"三季报"}
+      ],
+      "tabList": [
+        {"label": "公告", "name": "fulltext"},
+        {"label": "摘要", "name": "summary"},
+        {"label": "停复牌及监管公告", "name": "regulator"},
+        {"label": "定期报告", "name": "5"}
+      ]
+    },
+    "bj": {
+      "plate": [
+        {"key": "sz", "value": "深市"},
+        {"key": "szmb", "value": "深主板"},
+        {"key": "szzx", "value": "中小板"},
+        {"key": "szcy", "value": "创业板"},
+        {"key": "sh", "value": "沪市"},
+        {"key": "shmb", "value": "沪主板"},
+        {"key": "shkcp", "value": "科创板"}
+      ],
+      "relation": [
+        {"key":"category_mdcf_szdy","value":"媒体采访"},
+        {"key":"category_lyhd_szdy","value":"路演活动"},
+        {"key":"category_dyhd_szdy","value":"调研活动"},
+        {"key":"category_glzd_szdy","value":"管理制度"}
+      ],
+      "category": [
+        {"key": "category_ndbg_szsh", "value": "年报"},
+        {"key": "category_bndbg_szsh", "value": "半年报"},
+        {"key": "category_yjdbg_szsh", "value": "一季报"},
+        {"key": "category_sjdbg_szsh", "value": "三季报"},
+        {"key": "category_yjygjxz_szsh", "value": "业绩预告"},
+        {"key": "category_qyfpxzcs_szsh", "value": "权益分派"},
+        {"key": "category_dshgg_szsh", "value": "董事会"},
+        {"key": "category_jshgg_szsh", "value": "监事会"},
+        {"key": "category_gddh_szsh", "value": "股东会"},
+        {"key": "category_rcjy_szsh", "value": "日常经营"},
+        {"key": "category_gszl_szsh", "value": "公司治理"},
+        {"key": "category_zj_szsh", "value": "中介报告"},
+        {"key": "category_sf_szsh", "value": "首发"},
+        {"key": "category_zf_szsh", "value": "增发"},
+        {"key": "category_gqjl_szsh", "value": "股权激励"},
+        {"key": "category_pg_szsh", "value": "配股"},
+        {"key": "category_jj_szsh", "value": "解禁"},
+        {"key": "category_gszq_szsh", "value": "公司债"},
+        {"key": "category_kzzq_szsh", "value": "可转债"},
+        {"key": "category_qtrz_szsh", "value": "其他融资"},
+        {"key": "category_gqbd_szsh", "value": "股权变动"},
+        {"key": "category_bcgz_szsh", "value": "补充更正"},
+        {"key": "category_cqdq_szsh", "value": "澄清致歉"},
+        {"key": "category_fxts_szsh", "value": "风险提示"},
+        {"key": "category_tbclts_szsh", "value": "特别处理和退市"},
+        {"key": "category_tszlq_szsh", "value": "退市整理期"}
+      ],
+      "industry": [
+        {"key": "农、林、牧、渔业", "value": "农、林、牧、渔业"},
+        {"key": "采矿业", "value": "采矿业"},
+        {"key": "制造业", "value": "制造业"},
+        {"key": "电力、热力、燃气及水生产和供应业", "value": "电力、热力、燃气及水生产和供应业"},
+        {"key": "建筑业", "value": "建筑业"},
+        {"key": "批发和零售业", "value": "批发和零售业"},
+        {"key": "交通运输、仓储和邮政业", "value": "交通运输、仓储和邮政业"},
+        {"key": "住宿和餐饮业", "value": "住宿和餐饮业"},
+        {"key": "信息传输、软件和信息技术服务业", "value": "信息传输、软件和信息技术服务业"},
+        {"key": "金融业", "value": "金融业"},
+        {"key": "房地产业", "value": "房地产业"},
+        {"key": "租赁和商务服务业", "value": "租赁和商务服务业"},
+        {"key": "科学研究和技术服务业", "value": "科学研究和技术服务业"},
+        {"key": "水利、环境和公共设施管理业", "value": "水利、环境和公共设施管理业"},
+        {"key": "居民服务、修理和其他服务业", "value": "居民服务、修理和其他服务业"},
+        {"key": "教育", "value": "教育"},
+        {"key": "卫生和社会工作", "value": "卫生和社会工作"},
+        {"key": "文化、体育和娱乐业", "value": "文化、体育和娱乐业"},
+        {"key": "综合", "value": "综合"}
+      ],
+      "more":"行业",
+      "regulator": [
+        {"key":"category_ggjgjg_tfp","value":"停复牌"},
+        {"key":"category_ggjgjg_ywtz","value":"业务通知"},
+        {"key":"category_ggjgjg_ppcfgkqz","value":"批评处罚及公开谴责"},
+        {"key":"category_ggjgjg_jyfxts","value":"交易风险提示"},
+        {"key":"category_ggjgjg_qt","value":"其他"}
+      ],
+      "period": [
+        {"key":"category_ndbg_szsh","value":"年报"},
+        {"key":"category_bndbg_szsh","value":"半年报"},
+        {"key":"category_yjdbg_szsh","value":"一季报"},
+        {"key":"category_sjdbg_szsh","value":"三季报"}
+      ],
+      "tabList": [
+        {"label": "公告", "name": "fulltext"},
+        {"label": "摘要", "name": "summary"},
+        {"label": "停复牌及监管公告", "name": "regulator"},
+        {"label": "定期报告", "name": "5"}
+      ]
+    },
+    "hke": {
+      "plate": [
+        {"key": "hkmb", "value": "港主板"},
+        {"key": "hkcy", "value": "港创业板"}
+      ],
+      "category": [],
+      "industry": [],
+      "more": "",
+      "tabList": [
+        {"label": "公告", "name": "fulltext"}
+      ]
+    },
+    "third": {
+      "plate": [
+        {"key": "neeq", "value": "新三板"},
+        {"key": "staq", "value": "老三板"}
+      ],
+      "category": [
+        {"key": "category_lsgg", "value": "临时公告"},
+        {"key": "category_dqgg", "value": "定期公告"},
+        {"key": "category_zjjg", "value": "中介机构公告"},
+        {"key": "category_cxpl", "value": "持续信息披露"},
+        {"key": "category_scpl", "value": "首次信息披露"}
+      ],
+      "industry": [
+        {"key": "农、林、牧、渔业", "value": "农、林、牧、渔业"},
+        {"key": "采矿业", "value": "采矿业"},
+        {"key": "制造业", "value": "制造业"},
+        {"key": "电力、热力、燃气及水生产和供应业", "value": "电力、热力、燃气及水生产和供应业"},
+        {"key": "建筑业", "value": "建筑业"},
+        {"key": "批发和零售业", "value": "批发和零售业"},
+        {"key": "交通运输、仓储和邮政业", "value": "交通运输、仓储和邮政业"},
+        {"key": "住宿和餐饮业", "value": "住宿和餐饮业"},
+        {"key": "信息传输、软件和信息技术服务业", "value": "信息传输、软件和信息技术服务业"},
+        {"key": "金融业", "value": "金融业"},
+        {"key": "房地产业", "value": "房地产业"},
+        {"key": "租赁和商务服务业", "value": "租赁和商务服务业"},
+        {"key": "科学研究和技术服务业", "value": "科学研究和技术服务业"},
+        {"key": "水利、环境和公共设施管理业", "value": "水利、环境和公共设施管理业"},
+        {"key": "居民服务、修理和其他服务业", "value": "居民服务、修理和其他服务业"},
+        {"key": "教育", "value": "教育"},
+        {"key": "卫生和社会工作", "value": "卫生和社会工作"},
+        {"key": "文化、体育和娱乐业", "value": "文化、体育和娱乐业"},
+        {"key": "综合", "value": "综合"}
+      ]
+    },
+    "neeq": {
+      "category": [
+        {"key": "category_lsgg", "value": "临时公告"},
+        {"key": "category_dqgg", "value": "定期公告"},
+        {"key": "category_zjjg", "value": "中介机构公告"},
+        {"key": "category_cxpl", "value": "持续信息披露"},
+        {"key": "category_scpl", "value": "首次信息披露"}
+      ],
+      "more": "行业",
+      "period": [],
+      "tabList": [
+        {"label": "公告", "name": "fulltext"},
+        {"label": "定期报告", "name": "5"}
+      ]
+    },
+    "staq": {
+      "category": [
+        {"key": "category_lsgg", "value": "临时公告"},
+        {"key": "category_dqgg", "value": "定期公告"},
+        {"key": "category_zjjg", "value": "中介机构公告"},
+        {"key": "category_cxpl", "value": "持续信息披露"},
+        {"key": "category_scpl", "value": "首次信息披露"}
+      ],
+      "more":"行业",
+      "period": [],
+      "tabList": [
+        {"label": "公告", "name": "fulltext"},
+        {"label": "定期报告", "name": "5"}
+      ]
+    },
+    "fund": {
+      "category": [
+        {"key": "category_jjzm_jjgg", "value": "招募设立"},
+        {"key": "category_smsgx_jjgg", "value": "说明书更新"},
+        {"key": "category_ndbg_jjgg", "value": "年报"},
+        {"key": "category_bndbg_jjgg", "value": "中报"},
+        {"key": "category_jdbg_jjgg", "value": "季报"},
+        {"key": "category_jzgg_jjgg", "value": "净值"},
+        {"key": "category_zhtz_jjgg", "value": "投资组合"},
+        {"key": "category_sgsh_jjgg", "value": "申购赎回"},
+        {"key": "category_jjfl_jjgg", "value": "基金费率"},
+        {"key": "category_xsqd_jjgg", "value": "销售渠道"},
+        {"key": "category_fh_jjgg", "value": "分红"},
+        {"key": "category_ggjjjl_jjgg", "value": "高管及基金经理"},
+        {"key": "category_fecyr_jjgg", "value": "持有人大会"},
+        {"key": "category_jbxxbg_jjgg", "value": "基本信息变更"},
+        {"key": "category_qt_jjgg", "value": "其他"}
+      ],
+      "industry": [],
+      "more":"",
+      "regulator": [
+        {"key":"category_ggjgjg_tfp","value":"停复牌"},
+        {"key":"category_ggjgjg_ywtz","value":"业务通知"},
+        {"key":"category_ggjgjg_ppcfgkqz","value":"批评处罚及公开谴责"},
+        {"key":"category_ggjgjg_jyfxts","value":"交易风险提示"},
+        {"key":"category_ggjgjg_qt","value":"其他"}
+      ],
+      "period": [
+        {"key":"category_ndbg_jjgg","value":"年报"},
+        {"key":"category_bndbg_jjgg","value":"中报"},
+        {"key":"category_jdbg_jjgg","value":"季报"}
+      ],
+      "tabList": [
+        {"label": "公告", "name": "fulltext"},
+        {"label": "停复牌及监管公告", "name": "regulator"},
+        {"label": "定期报告", "name": "5"}
+      ]
+    },
+    "bond":{
+      "place": [
+        {"key": "zqgg_szzq", "value": "深市债券"},
+        {"key": "zqgg_shzq", "value": "沪市债券"}
+      ],
+      "category": [
+        {"key": "category_zqfxss_zqgg", "value": "债券发行上市"},
+        {"key": "category_zqdq_zqgg", "value": "债券定期公告"},
+        {"key": "category_zqfx_zqgg", "value": "债券付息公告"},
+        {"key": "category_zqdqdftz_zqgg", "value": "债券到期兑付停止交易公告"},
+        {"key": "category_zqqt_zqgg", "value": "债券其他公告"}
+      ],
+      "more":"",
+      "regulator": [
+        {"key":"category_ggjgjg_tfp","value":"停复牌"},
+        {"key":"category_ggjgjg_ywtz","value":"业务通知"},
+        {"key":"category_ggjgjg_ppcfgkqz","value":"批评处罚及公开谴责"},
+        {"key":"category_ggjgjg_jyfxts","value":"交易风险提示"},
+        {"key":"category_ggjgjg_qt","value":"其他"}
+      ],
+      "period": [],
+      "tabList": [
+        {"label": "公告", "name": "fulltext"},
+        {"label": "停复牌及监管公告", "name": "regulator"},
+        {"label": "定期报告", "name": "5"}
+      ]
+    },
+    "regulator": {
+      "org": [
+        {"key": "jgjg_sz", "value": "深交所"},
+        {"key": "jgjg_sh", "value": "上交所"},
+        {"key": "jgjg_jsgs", "value": "结算公司"},
+        {"key": "jgjg_zjh", "value": "证监会"}
+      ],
+      "category": [
+        {"key": "category_jgjg_tfp", "value": "停复牌"},
+        {"key": "category_jgjg_ywtz", "value": "业务通知"},
+        {"key": "category_jgjg_ppcfgkqz", "value": "批评处罚及公开谴责"},
+        {"key": "category_jgjg_jyfxts", "value": "交易风险提示"},
+        {"key": "category_jgjg_qt", "value": "其他"}
+      ]
+    },
+    "pre_disclosure": {
+      "more": "",
+      "category": ""
+    }
+  }

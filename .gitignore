@@ -1,0 +1,58 @@
+# Python缓存
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 虚拟环境
+.venv/
+venv/
+env/
+ENV/
+
+# pip 缓存
+pip-log.txt
+pip-delete-this-directory.txt
+
+# 单元测试缓存
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# 编辑器/IDE
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# MacOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# 日志文件
+*.log
+
+# 压缩包
+*.zip
+*.tar.gz
+*.tar
+*.rar
+
+# 项目自定义
+cache/
+downloads/
+chat.md 
