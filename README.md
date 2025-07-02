@@ -213,13 +213,19 @@ cache/
 
 ## 缓存目录和下载目录配置
 
-- **缓存目录**：默认配置为 `cache/`，由 `cache_manager.py` 内部自动创建和管理。如需修改缓存目录，可在 `CacheManager` 初始化时传入自定义路径，例如：
-  ```python
-  cache_manager = CacheManager(cache_dir="your_cache_dir")
-  ```
-- **下载目录**：默认配置为 `downloads/`，由 `config.py` 中 `Config` 类的 `download_base_dir` 属性控制。如需修改下载目录，可在 `config.py` 中调整：
-  ```python
-  self.download_base_dir = "your_downloads_dir"
-  ```
+**现在支持通过 `.env` 文件自定义缓存和下载目录。**
+
+1. 在项目根目录新建 `.env` 文件，内容示例：
+   ```
+   CACHE_DIR=D:/your/path/cache
+   DOWNLOADS_DIR=D:/your/path/downloads
+   ```
+   路径可根据需要自行修改。
+
+2. 程序会自动读取 `.env` 文件中的配置。如果没有设置，将使用默认的 `cache/` 和 `downloads/` 目录。
+
+3. `.env` 文件已加入 `.gitignore`，不会被提交到 git 仓库。
+
+4. 你也可以直接在 `config.py` 里修改默认值。
 
 如需自定义目录，请确保对应目录有写入权限。 

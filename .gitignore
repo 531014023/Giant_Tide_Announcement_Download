@@ -55,4 +55,7 @@ Desktop.ini
 # 项目自定义
 cache/
 downloads/
-chat.md 
+chat.md
+
+# New .env
+.env 

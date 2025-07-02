@@ -3,12 +3,16 @@
 """
 import json
 import os
+from dotenv import load_dotenv
+
+# 加载.env文件
+load_dotenv()
 
 class Config:
     """全局配置类"""
     
-    CACHE_DIR = "cache"
-    DOWNLOADS_DIR = "downloads"
+    CACHE_DIR = os.getenv("CACHE_DIR", "cache")
+    DOWNLOADS_DIR = os.getenv("DOWNLOADS_DIR", "downloads")
     
     def __init__(self):
         self.list_search = None
