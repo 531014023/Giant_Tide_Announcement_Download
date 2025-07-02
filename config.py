@@ -7,11 +7,14 @@ import os
 class Config:
     """全局配置类"""
     
+    CACHE_DIR = "cache"
+    DOWNLOADS_DIR = "downloads"
+    
     def __init__(self):
         self.list_search = None
         self.stock_info = None
         self.plate = None
-        self.download_base_dir = "downloads"
+        self.download_base_dir = self.DOWNLOADS_DIR
         
     def load_list_search(self, file_path="list-search.json"):
         """加载list-search.json文件"""

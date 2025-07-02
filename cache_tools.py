@@ -2,11 +2,12 @@
 缓存管理工具 - 提供缓存清理和查看功能
 """
 import sys
+from config import Config
 from cache_manager import CacheManager
 
 def show_cache_info():
     """显示缓存信息"""
-    cache_manager = CacheManager()
+    cache_manager = CacheManager(cache_dir=Config.CACHE_DIR)
     info = cache_manager.get_cache_info()
     
     print("=" * 50)
@@ -19,7 +20,7 @@ def show_cache_info():
 
 def clear_cache(cache_type=None):
     """清理缓存"""
-    cache_manager = CacheManager()
+    cache_manager = CacheManager(cache_dir=Config.CACHE_DIR)
     
     if cache_type is None:
         print("清理所有缓存...")

@@ -15,7 +15,7 @@ class AnnouncementDownloader:
     
     def __init__(self):
         self.config = Config()
-        self.cache_manager = CacheManager()
+        self.cache_manager = CacheManager(cache_dir=Config.CACHE_DIR)
         self.stock_searcher = StockSearcher(self.cache_manager)
         self.plate_parser = PlateParser(self.cache_manager)
         self.announcement_fetcher = AnnouncementFetcher(self.cache_manager)
