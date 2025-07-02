@@ -76,6 +76,11 @@ class AnnouncementDownloader:
         
         print(f"找到 {len(category_list)} 个分类")
         
+        # 获取只包含关键词
+        include_keywords = self.config.get_include_keywords()
+        if include_keywords:
+            print(f"只包含关键词: {include_keywords}")
+        
         # 获取排除关键字
         exclude_keywords = self.config.get_exclude_keywords()
         if exclude_keywords:
@@ -132,8 +137,12 @@ class AnnouncementDownloader:
                 category_value=category_name
             ):
                 announcement_count += 1
-                # 新增：排除关键字判断
                 title = announcement.get('announcementTitle', '')
+                # 先判断只包含关键词
+                if include_keywords and not any(kw in title for kw in include_keywords):
+                    print(f"跳过公告: {title} (不包含指定关键词)")
+                    continue
+                # 再判断排除关键词
                 if exclude_keywords and any(kw in title for kw in exclude_keywords):
                     print(f"跳过公告: {title} (命中排除关键字)")
                     continue

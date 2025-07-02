@@ -60,3 +60,14 @@ class Config:
         for sep in [',', '，', ';', '；']:
             keywords = keywords.replace(sep, ',')
         return [k.strip() for k in keywords.split(',') if k.strip()] 
+
+    def get_include_keywords(self):
+        """
+        从.env读取只包含关键词，返回列表
+        """
+        keywords = os.getenv("INCLUDE_KEYWORDS", "")
+        if not keywords.strip():
+            return []
+        for sep in [',', '，', ';', '；']:
+            keywords = keywords.replace(sep, ',')
+        return [k.strip() for k in keywords.split(',') if k.strip()] 
