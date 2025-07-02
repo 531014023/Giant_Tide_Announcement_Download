@@ -9,6 +9,7 @@ from stock_searcher import StockSearcher
 from plate_parser import PlateParser
 from announcement_fetcher import AnnouncementFetcher
 from file_downloader import FileDownloader
+from dotenv import load_dotenv
 
 class AnnouncementDownloader:
     """公告下载器主类"""
@@ -21,13 +22,14 @@ class AnnouncementDownloader:
         self.announcement_fetcher = AnnouncementFetcher(self.cache_manager)
         self.file_downloader = FileDownloader()
     
-    def run(self, stock_code, category_filter=None):
+    def run(self, stock_code, category_filter=None, incremental_update=False):
         """
         运行下载流程
         
         Args:
             stock_code (str): 股票代码
             category_filter (str|None): 分类过滤（中文名或key）
+            incremental_update (bool): 是否增量更新
         """
         print(f"开始处理股票: {stock_code}")
         print("=" * 50)
@@ -105,11 +107,19 @@ class AnnouncementDownloader:
             print(f"\n处理分类: {category_name} ({category_key})")
             print("-" * 30)
             
+            # 增量更新时不使用缓存
+            fetcher = self.announcement_fetcher
+            cache_manager_backup = None
+            if incremental_update:
+                cache_manager_backup = fetcher.cache_manager
+                fetcher.cache_manager = None
+            
             # 使用生成器逐条获取和下载公告
             category_downloaded = 0
             announcement_count = 0
+            skip_this_category = False
             
-            for announcement in self.announcement_fetcher.fetch_announcements_generator(
+            for announcement in fetcher.fetch_announcements_generator(
                 stock_info['code'],
                 stock_info['orgId'],
                 plate,
@@ -119,12 +129,16 @@ class AnnouncementDownloader:
                 announcement_count += 1
                 
                 # 立即下载当前公告
-                success = self.file_downloader.download_announcement(
+                result = self.file_downloader.download_announcement(
                     announcement,
                     download_dir,
                     category_name
                 )
-                if success:
+                if result == 'skip_category' and incremental_update:
+                    print(f"增量更新：遇到已存在文件，跳过当前分类 {category_name}")
+                    skip_this_category = True
+                    break
+                if result is True or (result == 'skip_category' and incremental_update):
                     category_downloaded += 1
                 
                 # 每下载10个文件显示一次进度
@@ -133,6 +147,13 @@ class AnnouncementDownloader:
             
             print(f"分类 {category_name} 下载完成: {category_downloaded}/{announcement_count}")
             total_downloaded += category_downloaded
+
+            # 恢复cache_manager
+            if incremental_update and cache_manager_backup is not None:
+                fetcher.cache_manager = cache_manager_backup
+            
+            if skip_this_category:
+                continue
         
         print("\n" + "=" * 50)
         print(f"下载完成! 总共下载 {total_downloaded} 个文件")
@@ -146,18 +167,28 @@ class AnnouncementDownloader:
 
 def main():
     """主函数"""
-    if len(sys.argv) < 2:
-        print("使用方法: python main.py <股票代码> [分类名或key]")
-        print("示例: python main.py 601225 年度报告")
-        return
-    
-    stock_code = sys.argv[1]
-    category_filter = sys.argv[2] if len(sys.argv) > 2 else None
-    
+    load_dotenv()
+    stock_code = None
+    category_filter = None
+    incremental_update = False
+    # 优先命令行参数
+    if len(sys.argv) >= 2:
+        stock_code = sys.argv[1]
+        category_filter = sys.argv[2] if len(sys.argv) > 2 else None
+    else:
+        # 从环境变量读取
+        stock_code = os.getenv("STOCK_CODE")
+        category_filter = os.getenv("CATEGORY_FILTER")
+        if not stock_code:
+            print("使用方法: python main.py <股票代码> [分类名或key] 或在.env中设置STOCK_CODE/CATEGORY_FILTER/INCREMENTAL_UPDATE")
+            print("示例: python main.py 601225 年度报告")
+            print("或在.env中添加: STOCK_CODE=601225")
+            return
+    # 增量更新参数
+    incremental_update = os.getenv("INCREMENTAL_UPDATE", "false").lower() == "true"
     # 创建下载器实例并运行
     downloader = AnnouncementDownloader()
-    success = downloader.run(stock_code, category_filter)
-    
+    success = downloader.run(stock_code, category_filter, incremental_update)
     if success:
         print("\n程序执行成功!")
     else:

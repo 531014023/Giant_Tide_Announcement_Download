@@ -144,7 +144,7 @@ class FileDownloader:
             category_name (str): 分类名称
             
         Returns:
-            bool: 下载是否成功
+            bool or str: 下载是否成功，若为'skip_category'表示遇到已存在文件
         """
         adjunct_url = announcement.get('adjunctUrl', '')
         if not adjunct_url:
@@ -171,7 +171,7 @@ class FileDownloader:
         if os.path.exists(file_path):
             if actual_size >= expected_size - 10:
                 print(f"文件已存在且完整，跳过下载: {file_path} ({actual_size}KB)")
-                return True
+                return 'skip_category'
             else:
                 print(f"文件已存在但不完整，将重新下载: {file_path} (实际{actual_size}KB, 期望{expected_size}KB)")
         

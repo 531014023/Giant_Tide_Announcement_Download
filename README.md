@@ -105,6 +105,20 @@ python cache_tools.py clear stock         # 清理股票页面缓存
 python cache_tools.py clear announcement  # 清理公告查询缓存
 ```
 
+### 增量更新模式
+
+你可以通过在 `.env` 文件中添加如下配置启用增量更新：
+
+```
+INCREMENTAL_UPDATE=true
+```
+
+- 启用增量更新后，每个分类只要遇到第一个"已存在且完整"的文件，就会直接跳过该分类，进入下一个分类。
+- 增量更新时，公告列表请求不会经过本地缓存，始终请求最新数据。
+- 适合定期同步新公告，避免重复下载。
+
+如需全量下载（不跳过任何分类），可将 `INCREMENTAL_UPDATE` 设为 `false` 或删除该配置。
+
 ## 配置文件格式
 
 `list-search.json` 文件默认不能动，这是从巨潮下载下来的。
@@ -228,4 +242,20 @@ cache/
 
 4. 你也可以直接在 `config.py` 里修改默认值。
 
-如需自定义目录，请确保对应目录有写入权限。 
+如需自定义目录，请确保对应目录有写入权限。
+
+## 启动参数与.env配置
+
+你可以通过 `.env` 文件配置以下参数：
+
+```
+STOCK_CODE=601225
+CATEGORY_FILTER=年报
+INCREMENTAL_UPDATE=true
+```
+
+- `STOCK_CODE`：要下载的股票代码（如 601225）。
+- `CATEGORY_FILTER`：只下载指定分类（可填分类中文名或key，留空则下载全部分类）。
+- `INCREMENTAL_UPDATE`：是否启用增量更新（true/false）。
+
+如果未通过命令行传递参数，程序会自动读取 `.env` 文件中的这些配置。 
