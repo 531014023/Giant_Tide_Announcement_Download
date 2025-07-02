@@ -97,7 +97,7 @@ class AnnouncementDownloader:
                 print(f"未找到指定分类: {category_filter}")
                 return False
             category_list = filtered
-            print(f"仅下载指定分类(支持中文模糊): {category_filter}")
+            print(f"仅下载指定分类: {category_filter}")
         
         # 5. 创建下载目录
         stock_name = stock_info['zwjc']
