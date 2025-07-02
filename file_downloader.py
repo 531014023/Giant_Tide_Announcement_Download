@@ -80,56 +80,59 @@ class FileDownloader:
         except Exception:
             return 0
     
-    def download_file(self, url, file_path, expected_size_kb):
+    def download_file(self, url, file_path, expected_size_kb, max_retries=3):
         """
-        使用pycurl下载文件
+        使用pycurl下载文件，支持重试
         
         Args:
             url (str): 下载URL
             file_path (str): 保存路径
             expected_size_kb (int): 期望文件大小 (KB)
-            
+            max_retries (int): 最大重试次数
         Returns:
             bool: 下载是否成功
         """
-        try:
-            # 确保目录存在
-            os.makedirs(os.path.dirname(file_path), exist_ok=True)
-            
-            # 使用pycurl下载
-            with open(file_path, 'wb') as f:
-                curl = pycurl.Curl()
-                curl.setopt(pycurl.URL, url)
-                curl.setopt(pycurl.WRITEDATA, f)
-                curl.setopt(pycurl.FOLLOWLOCATION, True)
-                curl.setopt(pycurl.TIMEOUT, 60)
-                curl.setopt(pycurl.USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36')
-                curl.perform()
-                http_code = curl.getinfo(pycurl.HTTP_CODE)
-                curl.close()
-            
-            if http_code == 200:
-                # 检查文件大小
-                actual_size = self.get_file_size(file_path)
-                if actual_size >= expected_size_kb - 10:  # 允许10KB的误差
-                    print(f"下载成功: {file_path} ({actual_size}KB)")
-                    return True
-                else:
-                    print(f"文件大小不匹配: 期望{expected_size_kb}KB, 实际{actual_size}KB")
-                    # 删除不完整的文件
-                    if os.path.exists(file_path):
-                        os.remove(file_path)
-                    return False
-            else:
-                print(f"下载失败，HTTP状态码: {http_code}")
-                return False
+        attempt = 0
+        while attempt < max_retries:
+            if(attempt > 0):
+                time.sleep(self.download_delay)
+            try:
+                # 确保目录存在
+                os.makedirs(os.path.dirname(file_path), exist_ok=True)
                 
-        except Exception as e:
-            print(f"下载文件时发生错误: {e}")
-            # 删除可能不完整的文件
-            if os.path.exists(file_path):
-                os.remove(file_path)
-            return False
+                # 使用pycurl下载
+                with open(file_path, 'wb') as f:
+                    curl = pycurl.Curl()
+                    curl.setopt(pycurl.URL, url)
+                    curl.setopt(pycurl.WRITEDATA, f)
+                    curl.setopt(pycurl.FOLLOWLOCATION, True)
+                    curl.setopt(pycurl.TIMEOUT, 60)
+                    curl.setopt(pycurl.USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36')
+                    curl.perform()
+                    http_code = curl.getinfo(pycurl.HTTP_CODE)
+                    curl.close()
+                
+                if http_code == 200:
+                    # 检查文件大小
+                    actual_size = self.get_file_size(file_path)
+                    if actual_size >= expected_size_kb - 10:
+                        print(f"下载成功: {file_path} ({actual_size}KB)")
+                        return True
+                    else:
+                        print(f"文件大小不匹配: 期望{expected_size_kb}KB, 实际{actual_size}KB，重试({attempt+1}/{max_retries})")
+                        attempt += 1
+                        continue
+                else:
+                    print(f"下载失败，HTTP状态码: {http_code}，重试({attempt+1}/{max_retries})")
+                    attempt += 1
+                    continue
+                
+            except Exception as e:
+                print(f"下载文件时发生错误: {e}，重试({attempt+1}/{max_retries})")
+                attempt += 1
+                continue
+        print(f"下载失败，已重试{max_retries}次: {file_path}")
+        return False
     
     def download_announcement(self, announcement, save_dir, category_name):
         """
@@ -167,17 +170,16 @@ class FileDownloader:
         actual_size = self.get_file_size(file_path)
         if os.path.exists(file_path):
             if actual_size >= expected_size - 10:
-                print(f"文件已存在且完整，跳过下载: {filename} ({actual_size}KB)")
+                print(f"文件已存在且完整，跳过下载: {file_path} ({actual_size}KB)")
                 return True
             else:
-                print(f"文件已存在但不完整，将重新下载: {filename} (实际{actual_size}KB, 期望{expected_size}KB)")
-                os.remove(file_path)
+                print(f"文件已存在但不完整，将重新下载: {file_path} (实际{actual_size}KB, 期望{expected_size}KB)")
         
-        print(f"开始下载: {filename}")
+        print(f"开始下载: {file_path}")
         print(f"URL: {full_url}")
         
         # 下载文件
-        success = self.download_file(full_url, file_path, expected_size)
+        success = self.download_file(full_url, file_path, expected_size, max_retries=3)
         
         if success:
             # 下载成功后等待1秒
