@@ -67,6 +67,32 @@ python main.py <股票代码>/<股票名称>
 python main.py 601225
 python main.py 陕西煤业
 ```
+## 启动参数与.env配置
+
+你可以通过 `.env` 文件配置以下参数：
+
+```
+STOCK_CODE=601225
+CATEGORY_FILTER=年报
+INCREMENTAL_UPDATE=true
+```
+
+- `STOCK_CODE`：要下载的股票代码（如 601225）。
+- `CATEGORY_FILTER`：只下载指定分类（可填分类中文名或key，留空则下载全部分类）。
+- `INCREMENTAL_UPDATE`：是否启用增量更新（true/false）。
+
+如果未通过命令行传递参数，程序会自动读取 `.env` 文件中的这些配置。
+
+## 启动脚本
+
+你可以直接双击或运行 `start.bat` 脚本来快速启动本程序。
+
+该脚本等价于：
+```
+python main.py
+```
+
+如果你已在 `.env` 文件中配置好相关参数（如 STOCK_CODE、INCLUDE_KEYWORDS 等），直接运行脚本即可自动读取配置并执行。 
 
 ### 启动时指定分类下载
 
@@ -270,30 +296,3 @@ cache/
 4. 你也可以直接在 `config.py` 里修改默认值。
 
 如需自定义目录，请确保对应目录有写入权限。
-
-## 启动参数与.env配置
-
-你可以通过 `.env` 文件配置以下参数：
-
-```
-STOCK_CODE=601225
-CATEGORY_FILTER=年报
-INCREMENTAL_UPDATE=true
-```
-
-- `STOCK_CODE`：要下载的股票代码（如 601225）。
-- `CATEGORY_FILTER`：只下载指定分类（可填分类中文名或key，留空则下载全部分类）。
-- `INCREMENTAL_UPDATE`：是否启用增量更新（true/false）。
-
-如果未通过命令行传递参数，程序会自动读取 `.env` 文件中的这些配置。
-
-## 启动脚本
-
-你可以直接双击或运行 `start.bat` 脚本来快速启动本程序。
-
-该脚本等价于：
-```
-python main.py
-```
-
-如果你已在 `.env` 文件中配置好相关参数（如 STOCK_CODE、INCLUDE_KEYWORDS 等），直接运行脚本即可自动读取配置并执行。 
