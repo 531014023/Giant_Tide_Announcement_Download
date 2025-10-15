@@ -88,11 +88,17 @@ class AnnouncementDownloader:
         
         # 如果指定了分类过滤，只保留匹配的分类
         if category_filter:
+            # 支持逗号分隔的多个分类过滤
+            for sep in [',', '，', ';', '；']:
+                category_filter = category_filter.replace(sep, ',')
+            filter_list = [f.strip() for f in category_filter.split(',')]
             filtered = []
             for item in category_list:
                 # key，value精确匹配，
-                if category_filter == item.get('key') or item.get('value') == category_filter:
-                    filtered.append(item)
+                for filter_item in filter_list:
+                    if filter_item == item.get('key') or item.get('value') == filter_item:
+                        filtered.append(item)
+                        break  # 找到匹配项后跳出内层循环
             if not filtered:
                 print(f"未找到指定分类: {category_filter}")
                 return False
