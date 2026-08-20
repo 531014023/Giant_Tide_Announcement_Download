@@ -211,14 +211,14 @@ class AnnouncementDownloader:
         fetcher = HKAnnouncementFetcher()
         announcements = fetcher.fetch(stock_code)
         if not announcements:
-            print("未找到符合条件的港股公告（年报/半年报/一季报/三季报/業務更新/業績公告）")
+            print("未找到符合条件的港股公告（年报/半年报/一季报/三季报/业务更新/业绩公告）")
             return False
 
         stock_name = announcements[0]['secName'] or f"HK{stock_code.zfill(5)}"
         download_dir = os.path.join(self.config.download_base_dir, stock_name)
         os.makedirs(download_dir, exist_ok=True)
 
-        # 按类别分组（年报/半年报/一季报/三季报/業務更新/業績公告 -> 子目录）
+        # 按类别分组（年报/半年报/一季报/三季报/业务更新/业绩公告 -> 子目录）
         by_cat = {}
         for a in announcements:
             by_cat.setdefault(a['category'], []).append(a)
@@ -230,7 +230,7 @@ class AnnouncementDownloader:
                 category_filter = category_filter.replace(sep, ',')
             filters = [f.strip() for f in category_filter.split(',') if f.strip()]
             if filters:
-                # 港股分类名采用 A股习惯：年报 / 半年报 / 一季报 / 三季报 / 業務更新 / 業績公告
+                # 港股分类名采用 A股习惯：年报 / 半年报 / 一季报 / 三季报 / 业务更新 / 业绩公告
                 # 别名映射：用户用 A股习惯词(中报/中期/季报/季度 等)也能命中
                 alias = {
                     '半年报': '半年报', '中报': '半年报', '中期报告': '半年报', '中期': '半年报',
@@ -238,10 +238,10 @@ class AnnouncementDownloader:
                     '年报': '年报', '年度报告': '年报', 'annual': '年报', 'annual report': '年报',
                     '一季报': '一季报', '第一季度': '一季报', '第一季': '一季报',
                     '三季报': '三季报', '第三季度': '三季报', '第三季': '三季报',
-                    '業績公告': '業績公告', '业绩公告': '業績公告', '業績': '業績公告',
-                    '业绩': '業績公告', 'results': '業績公告',
-                    '業務更新': '業務更新', '业务更新': '業務更新',
-                    '最新业务状况': '業務更新', '业务状况': '業務更新',
+                    '业绩公告': '业绩公告', '業績公告': '业绩公告', '業績': '业绩公告',
+                    '业绩': '业绩公告', 'results': '业绩公告',
+                    '业务更新': '业务更新', '業務更新': '业务更新',
+                    '最新业务状况': '业务更新', '业务状况': '业务更新',
                 }
                 # 泛指"季报/季度"展开为一季报+三季报（A股习惯下一季/三季分列，但用户写"季报"是想要两者）
                 broad = {'季报', '季度', '季度报告', 'quarterly', 'quarterly report'}
@@ -255,7 +255,7 @@ class AnnouncementDownloader:
                     keep.add(alias.get(fl, f))   # 未命中别名则按原名匹配
                 by_cat = {c: items for c, items in by_cat.items() if c in keep}
                 if not by_cat:
-                    print(f"未找到指定分类: {category_filter}（港股可用分类: 年报/半年报/一季报/三季报/業務更新/業績公告）")
+                    print(f"未找到指定分类: {category_filter}（港股可用分类: 年报/半年报/一季报/三季报/业务更新/业绩公告）")
                     return False
                 print(f"仅下载指定分类(映射后): {sorted(keep)}")
 

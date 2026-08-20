@@ -26,6 +26,12 @@ import json
 from datetime import datetime
 
 import requests
+from opencc import OpenCC
+
+# 繁→简转换器：输出(目录名/文件名/关键词过滤)统一用简体。
+# 注意：标题分类仍在港交所繁体原文上做（关键词繁简混合，原文匹配最稳），
+#       转简只发生在产出 announcementTitle/secName 时。
+_CC = OpenCC("t2s")
 
 BASE = "https://www1.hkexnews.hk"
 SEARCH_PAGE = f"{BASE}/search/titlesearch.xhtml"
@@ -63,10 +69,10 @@ CATEGORY_RULES = [
     # 业务更新：自愿性经营数据披露（非定期报告），形如"X季度最新業務狀況"/
     # "自願公告 業務資料更新"。含季度经营数据，对跟踪有价值，但必须单列，
     # 不能与正式一季报/三季报混淆（故上文季报规则刻意不用裸"第一季/第三季"）。
-    ("業務更新", ["最新業務狀況", "最新业务状况", "業務狀況", "业务状况",
+    ("业务更新", ["最新業務狀況", "最新业务状况", "業務狀況", "业务状况",
                 "業務資料更新", "業務資料", "業務更新", "业务更新"]),
-    # 業績公告（兜底）：其他无法归入上述定期报告期间的業績类公告
-    ("業績公告", ["業績", "业绩", "results", "preliminary results"]),
+    # 业绩公告（兜底）：其他无法归入上述定期报告期间的業績类公告
+    ("业绩公告", ["業績", "业绩", "results", "preliminary results"]),
 ]
 
 # 排除词：即便命中上面类别也不下载（不属于"定期报告/业绩公告"）
@@ -259,7 +265,7 @@ class HKAnnouncementFetcher:
             date_str = self._parse_date(rec.get("DATE_TIME", ""))
             size = self._parse_size(rec.get("FILE_INFO", ""))
             sec = self._clean(rec.get("STOCK_CODE", ""))
-            name = self._clean(rec.get("STOCK_NAME", ""))
+            name = _CC.convert(self._clean(rec.get("STOCK_NAME", "")))
             key = (link, title)  # 去重（中文/英文版不会同时出现，因 lang=ZH）
             if key in seen:
                 continue
@@ -267,7 +273,8 @@ class HKAnnouncementFetcher:
             out.append({
                 "adjunctUrl": link,
                 "adjunctSize": size,
-                "announcementTitle": title,
+                # 标题转简体（文件名/关键词过滤用简体；分类已用繁体原文判定）
+                "announcementTitle": _CC.convert(title),
                 "secCode": code,
                 "secName": name or f"HK{code}",
                 "announcementDate": date_str,

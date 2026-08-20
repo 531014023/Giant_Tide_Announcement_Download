@@ -2,4 +2,5 @@ requests==2.31.0
 pycurl==7.45.5
 beautifulsoup4==4.12.2
 lxml==5.3.0
-python-dotenv 
+python-dotenv
+opencc-python-reimplemented==0.1.7
