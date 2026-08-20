@@ -88,7 +88,10 @@ class FileDownloader:
             filename_parts.append(sec_name)
         
         # 清理标题中的特殊字符
-        clean_title = re.sub(r'[<>:"/\\|?*]', '_', title)
+        # 港股 TITLE 字段可能含字面换行符(\r\n)，Windows 文件名不允许 -> Errno 22
+        # 故先去除控制字符(0x00-0x1f 含 \r\n\t)，再替换其余非法字符
+        clean_title = re.sub(r'[\x00-\x1f]', '', title)
+        clean_title = re.sub(r'[<>:"/\\|?*]', '_', clean_title)
         filename_parts.append(clean_title)
         
         filename = '_'.join(filename_parts) + '.pdf'
@@ -279,11 +282,14 @@ class FileDownloader:
             print("公告没有附件URL")
             return False
         
-        # 构建完整URL
-        full_url = self.base_url + adjunct_url
-        
-        # 提取日期
-        date_str = self.extract_date_from_url(adjunct_url)
+        # 构建完整URL：港股传来的是绝对地址(http(s))，A股是相对路径(拼 base_url)
+        if adjunct_url.startswith(('http://', 'https://')):
+            full_url = adjunct_url
+        else:
+            full_url = self.base_url + adjunct_url
+
+        # 提取日期：优先用公告自带的公告日(港股链接无横杠日期)，否则从URL正则抠
+        date_str = announcement.get('announcementDate') or self.extract_date_from_url(adjunct_url)
         
         # 生成文件名
         filename = self.generate_filename(announcement, date_str)
