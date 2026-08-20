@@ -220,7 +220,7 @@ class HKAnnouncementFetcher:
     # ------------------------------------------------------------------ #
     # 对外接口
     # ------------------------------------------------------------------ #
-    def fetch(self, stock_code, from_date="20000101", to_date=None):
+    def fetch(self, stock_code, from_date="20000101", to_date=None, sec_name_hint=None):
         """
         抓取某港股代码的定期报告 + 业绩公告（中文），返回归一化公告列表。
 
@@ -228,6 +228,8 @@ class HKAnnouncementFetcher:
             stock_code (str): 港股代码，支持 '700' / '00700' / '00700.HK' 等写法
             from_date (str): 起始日期 YYYYMMDD，默认 20000101（全历史）
             to_date (str): 结束日期 YYYYMMDD，默认今天
+            sec_name_hint (str): 公司简体简称（A股搜索接口返回的 zwjc），
+                优先用作目录名/文件名；未提供时用港交所繁体 STOCK_NAME 转简。
 
         Returns:
             list[dict]: 每个元素字段与 A股公告同构
@@ -265,7 +267,11 @@ class HKAnnouncementFetcher:
             date_str = self._parse_date(rec.get("DATE_TIME", ""))
             size = self._parse_size(rec.get("FILE_INFO", ""))
             sec = self._clean(rec.get("STOCK_CODE", ""))
-            name = _CC.convert(self._clean(rec.get("STOCK_NAME", "")))
+            # 公司名：优先 A股搜索返回的简体简称(sec_name_hint)，否则港交所繁体转简
+            if sec_name_hint:
+                name = sec_name_hint
+            else:
+                name = _CC.convert(self._clean(rec.get("STOCK_NAME", "")))
             key = (link, title)  # 去重（中文/英文版不会同时出现，因 lang=ZH）
             if key in seen:
                 continue

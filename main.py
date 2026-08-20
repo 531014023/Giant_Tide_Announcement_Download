@@ -76,7 +76,8 @@ class AnnouncementDownloader:
         # 直接切换至 HKEXnews 下载分支（无需用户加 --market hk）。
         if plate == 'hke':
             print("检测到港股代码，自动切换至港股(HKEXnews)下载分支")
-            return self._run_hk(stock_info['code'], incremental_update, category_filter)
+            return self._run_hk(stock_info['code'], incremental_update, category_filter,
+                                stock_info.get('zwjc'))
 
         # 4. 获取分类列表
         print("\n步骤4: 获取分类列表")
@@ -200,21 +201,23 @@ class AnnouncementDownloader:
         
         return True
 
-    def _run_hk(self, stock_code, incremental_update=False, category_filter=None):
+    def _run_hk(self, stock_code, incremental_update=False, category_filter=None,
+                sec_name_hint=None):
         """
         港股(HKEXnews)下载分支：复用 FileDownloader，按类别分子目录。
         兼容 A股原有逻辑：CATEGORY_FILTER 限定分类、INCLUDE/EXCLUDE_KEYWORDS 过滤标题。
+        sec_name_hint: A股搜索返回的简体简称(zwjc)，优先作目录名/文件名。
         """
         from hk_fetcher import HKAnnouncementFetcher
 
         print("市场: 港股 (HKEXnews)")
         fetcher = HKAnnouncementFetcher()
-        announcements = fetcher.fetch(stock_code)
+        announcements = fetcher.fetch(stock_code, sec_name_hint=sec_name_hint)
         if not announcements:
             print("未找到符合条件的港股公告（年报/半年报/一季报/三季报/业务更新/业绩公告）")
             return False
 
-        stock_name = announcements[0]['secName'] or f"HK{stock_code.zfill(5)}"
+        stock_name = sec_name_hint or announcements[0]['secName'] or f"HK{stock_code.zfill(5)}"
         download_dir = os.path.join(self.config.download_base_dir, stock_name)
         os.makedirs(download_dir, exist_ok=True)
 
