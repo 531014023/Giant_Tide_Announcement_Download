@@ -208,7 +208,7 @@ class AnnouncementDownloader:
         兼容 A股原有逻辑：CATEGORY_FILTER 限定分类、INCLUDE/EXCLUDE_KEYWORDS 过滤标题。
         sec_name_hint: A股搜索返回的简体简称(zwjc)，优先作目录名/文件名。
         """
-        from hk_fetcher import HKAnnouncementFetcher
+        from hk_fetcher import HKAnnouncementFetcher, keyword_match_text
 
         print("市场: 港股 (HKEXnews)")
         fetcher = HKAnnouncementFetcher()
@@ -277,13 +277,20 @@ class AnnouncementDownloader:
             print(f"\n处理分类: {category_name} ({len(items)} 个)")
             print("-" * 30)
             cat_downloaded = 0
+            cat_kw_skipped = 0
+            cat_exist_skipped = 0
             for idx, announcement in enumerate(items, 1):
                 title = announcement.get('announcementTitle', '')
+                # 港股标题年份常写中文数字（"二零二六年…"），关键词匹配需走归一化文本，
+                # 否则 .env 里写 2026 会漏掉全部中文数字标题（见 keyword_match_text 说明）。
+                match_text = keyword_match_text(title)
                 # 先判断只包含关键词
-                if include_keywords and not any(kw in title for kw in include_keywords):
+                if include_keywords and not any(kw in match_text for kw in include_keywords):
+                    cat_kw_skipped += 1
                     continue
                 # 再判断排除关键词
-                if exclude_keywords and any(kw in title for kw in exclude_keywords):
+                if exclude_keywords and any(kw in match_text for kw in exclude_keywords):
+                    cat_kw_skipped += 1
                     continue
                 result = self.file_downloader.download_announcement(
                     announcement, download_dir, category_name
@@ -292,12 +299,21 @@ class AnnouncementDownloader:
                 # 继续处理本分类其余文件（不能因首个文件已存在就放弃整个分类，
                 # 否则在文件名变化/存在缺口时会漏下本应下载的文件）。
                 if result == 'skip_category':
+                    cat_exist_skipped += 1
                     continue
                 if result is True:
                     cat_downloaded += 1
                 if idx % 10 == 0:
                     print(f"分类 {category_name} 进度: {idx} 个，成功下载 {cat_downloaded} 个")
-            print(f"分类 {category_name} 下载完成: {cat_downloaded}/{len(items)}")
+            # 如实交代"为什么是 0"：区分关键词过滤跳过 / 已存在跳过，
+            # 避免用户看到 0 个却不知原因（曾误以为下载失败）。
+            extra = []
+            if cat_kw_skipped:
+                extra.append(f"关键词过滤跳过 {cat_kw_skipped} 个")
+            if cat_exist_skipped:
+                extra.append(f"已存在跳过 {cat_exist_skipped} 个")
+            suffix = f"（{'，'.join(extra)}）" if extra else ""
+            print(f"分类 {category_name} 下载完成: {cat_downloaded}/{len(items)}{suffix}")
             total_downloaded += cat_downloaded
 
         print("\n" + "=" * 50)
